@@ -16,13 +16,14 @@ window.addEventListener('DOMContentLoaded', () =>{
             }
 
 
-            let dateStop = new Date(deadline).getTime(),
+            let dateStop = new Date(2020, 1, 18, 19, 34, 0),
                 dateNow = new Date().getTime(),
                 timeRemaining = (dateStop - dateNow) / 1000,
                 seconds = zero(Math.floor(timeRemaining % 60)),
                 minutes =zero(Math.floor((timeRemaining / 60) % 60)),
                 hours = zero(Math.floor(timeRemaining / 60 / 60)),
                 days = Math.floor(timeRemaining / 60 / 60 / 24);
+                console.log(dateStop);
             return {timeRemaining, hours, minutes, seconds};
         }
 
@@ -32,10 +33,11 @@ window.addEventListener('DOMContentLoaded', () =>{
             timerHours.textContent = timer.hours;
             timerMinutes.textContent = timer.minutes;
             timerSeconds.textContent = timer.seconds;
-
+            let timeinterval = setInterval(updateClock, 1000);
             if(timer.timeRemaining > 0){
-                setInterval(updateClock, 1000)
+                timeinterval;
             } else {
+                clearInterval(timeinterval);
                 timerHours.textContent = '00';
                 timerMinutes.textContent = '00';
                 timerSeconds.textContent = '00';
@@ -44,6 +46,6 @@ window.addEventListener('DOMContentLoaded', () =>{
         updateClock();
     }
 
-    countTimer('1 march 2020');
+    countTimer();
     //setInterval(countTimer, 1000, '01 march 2020')
 });
