@@ -65,47 +65,54 @@ window.addEventListener('DOMContentLoaded', () =>{
     //popup
     const togglePopup = () => {
         const popup = document.querySelector('.popup'),
-            btnPopup = document.querySelectorAll('.popup-btn'),
+            popupBtn = document.querySelectorAll('.popup-btn'),
             closePopup = document.querySelector('.popup-close'),
             popupContent = document.querySelector('.popup-content');
-        let speed = 0,
-            intervalPopup,
-            width = window.innerWidth;
-            console.log(width);
             
-        
-        const flyPopup = () =>{
-            if(width > 768){
-                intervalPopup = requestAnimationFrame(flyPopup);
-                speed += 5;
-                popupContent.style.left = 0 + 'px'; 
-                popupContent.style.left = speed + 'px';
-                if(speed > width/2 - 175 ){
-                    cancelAnimationFrame(intervalPopup)
-                }
-            } else{
-                popupContent.style.left = 'align-center'; 
+        const showPopup = () => {
+            popup.style.display = 'block';
+
+            if (screen.width > 768) {
+                let start = Date.now();
+
+                let timer = setInterval(() => {
+                    let timePassed = Date.now() - start;
+                    if (timePassed >= 800) {
+                        clearInterval(timer);
+                        return;
+                    }
+
+                    draw(timePassed);
+                });
+
+                let draw = (timePassed) => {
+                    let wContent = +getComputedStyle(popupContent).width.split('px')[0];
+                    wContent = -wContent / 2 + 50 + 'px';
+                    popupContent.style.left = timePassed / 16 + '%';
+                    popupContent.style.marginLeft = wContent;
+                };
             }
-        } 
 
-        btnPopup.forEach((elem) => {
-            elem.addEventListener('click', () => {
-                popup.style.display = 'block';
-                flyPopup();
-            })
+        };
+
+        popupBtn.forEach((elem) => {
+            elem.addEventListener('click', showPopup);
         });
 
-        closePopup.addEventListener('click', () => {
-            popup.style.display = 'none';
-            //width = window.innerWidth;
-        });
+        popup.addEventListener('click', (event) => {
+            let target = event.target;
 
-        
+            if (target.classList.contains('popup-close')) {
+                popup.style.display = 'none';
+            } else {
+                target = target.closest('.popup-content');
+                if (!target) {
+                    popup.style.display = 'none';
+                }
+            }
+        });
     };
 
     togglePopup();
 
-    window.addEventListener('load', togglePopup.flyPopup);
-    window.addEventListener('resize', togglePopup.flyPopup);
-    
 });
