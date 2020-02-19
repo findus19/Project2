@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () =>{
     'use strict';
     //timer
-    function countTimer(deadline){
+    const  countTimer = (deadline) =>{
         let timerHours = document.querySelector('#timer-hours'),
             timerMinutes = document.querySelector('#timer-minutes'),
             timerSeconds = document.querySelector('#timer-seconds');
@@ -80,7 +80,6 @@ window.addEventListener('DOMContentLoaded', () =>{
             popup.style.display = 'block';
             popupContent.style.left = 0 + 'px'; 
             popupContent.style.left = speed + 'px';
-            console.log(speed);
             if(speed > width/2 - 175 ){
                 cancelAnimationFrame(intervalPopup)
             }
@@ -95,7 +94,8 @@ window.addEventListener('DOMContentLoaded', () =>{
                 } else {
                     console.log(width);
                     popup.style.display = 'block';
-                    popupContent.style.left = 0 + 'px'; 
+                    popupContent.style.left = 'align-center'; 
+                    console.log(popupContent.style.left)
                     
                 }
             })
@@ -103,7 +103,6 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         closePopup.addEventListener('click', () => {
             popup.style.display = 'none';
-            
         });
     };
 
