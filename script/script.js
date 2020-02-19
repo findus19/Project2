@@ -6,15 +6,13 @@ window.addEventListener('DOMContentLoaded', () =>{
             timerMinutes = document.querySelector('#timer-minutes'),
             timerSeconds = document.querySelector('#timer-seconds');
         
-        function getTimeRemaining() {
-
+        const getTimeRemaining = () => {
             function zero(value){
                 if(value < 10){
                     value = '0' + value;
                 }
                 return value
             }
-
 
             let dateStop = new Date(deadline).getTime(),
                 dateNow = new Date().getTime(),
@@ -26,7 +24,7 @@ window.addEventListener('DOMContentLoaded', () =>{
             return {timeRemaining, hours, minutes, seconds};
         }
 
-        function updateClock(){
+        const updateClock = () => {
             let timer = getTimeRemaining();
 
             timerHours.textContent = timer.hours;
@@ -91,17 +89,21 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         btnPopup.forEach((elem) => {
             elem.addEventListener('click', () => {
-                console.log(popupContent.offsetWidth);
+                width = window.innerWidth;
                 if (width > 768){
                     requestAnimationFrame(flyPopup);
                 } else {
+                    console.log(width);
                     popup.style.display = 'block';
+                    popupContent.style.left = 0 + 'px'; 
+                    
                 }
             })
         });
 
         closePopup.addEventListener('click', () => {
             popup.style.display = 'none';
+            
         });
     };
 
