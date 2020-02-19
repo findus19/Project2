@@ -74,37 +74,38 @@ window.addEventListener('DOMContentLoaded', () =>{
             console.log(width);
             
         
-        let flyPopup = () =>{
-            intervalPopup = requestAnimationFrame(flyPopup);
-            speed += 5;
-            popup.style.display = 'block';
-            popupContent.style.left = 0 + 'px'; 
-            popupContent.style.left = speed + 'px';
-            if(speed > width/2 - 175 ){
-                cancelAnimationFrame(intervalPopup)
+        const flyPopup = () =>{
+            if(width > 768){
+                intervalPopup = requestAnimationFrame(flyPopup);
+                speed += 5;
+                popupContent.style.left = 0 + 'px'; 
+                popupContent.style.left = speed + 'px';
+                if(speed > width/2 - 175 ){
+                    cancelAnimationFrame(intervalPopup)
+                }
+            } else{
+                popupContent.style.left = 'align-center'; 
             }
-
         } 
 
         btnPopup.forEach((elem) => {
             elem.addEventListener('click', () => {
-                width = window.innerWidth;
-                if (width > 768){
-                    requestAnimationFrame(flyPopup);
-                } else {
-                    console.log(width);
-                    popup.style.display = 'block';
-                    popupContent.style.left = 'align-center'; 
-                    console.log(popupContent.style.left)
-                    
-                }
+                popup.style.display = 'block';
+                flyPopup();
             })
         });
 
         closePopup.addEventListener('click', () => {
             popup.style.display = 'none';
+            //width = window.innerWidth;
         });
+
+        
     };
 
     togglePopup();
+
+    window.addEventListener('load', togglePopup.flyPopup);
+    window.addEventListener('resize', togglePopup.flyPopup);
+    
 });
