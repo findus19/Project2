@@ -57,7 +57,6 @@ window.addEventListener('DOMContentLoaded', () =>{
         btnMenu.addEventListener('click', handlerMenu);
         closeBtn.addEventListener('click', handlerMenu);
         menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
-
     }
 
     toggleMenu();
@@ -65,54 +64,72 @@ window.addEventListener('DOMContentLoaded', () =>{
     //popup
     const togglePopup = () => {
         const popup = document.querySelector('.popup'),
-            popupBtn = document.querySelectorAll('.popup-btn'),
+            btnPopup = document.querySelectorAll('.popup-btn'),
             closePopup = document.querySelector('.popup-close'),
             popupContent = document.querySelector('.popup-content');
-            
-        const showPopup = () => {
-            popup.style.display = 'block';
-
-            if (screen.width > 768) {
-                let start = Date.now();
-
-                let timer = setInterval(() => {
-                    let timePassed = Date.now() - start;
-                    if (timePassed >= 800) {
-                        clearInterval(timer);
-                        return;
-                    }
-
-                    draw(timePassed);
-                });
-
-                let draw = (timePassed) => {
-                    let wContent = +getComputedStyle(popupContent).width.split('px')[0];
-                    wContent = -wContent / 2 + 50 + 'px';
-                    popupContent.style.left = timePassed / 16 + '%';
-                    popupContent.style.marginLeft = wContent;
-                };
-            }
-
-        };
-
-        popupBtn.forEach((elem) => {
-            elem.addEventListener('click', showPopup);
-        });
-
-        popup.addEventListener('click', (event) => {
-            let target = event.target;
-
-            if (target.classList.contains('popup-close')) {
-                popup.style.display = 'none';
-            } else {
-                target = target.closest('.popup-content');
-                if (!target) {
-                    popup.style.display = 'none';
+            const showPopup = () => {
+                popup.style.display = 'block'; // показать попап
+    
+                if (screen.width > 768) { // если ширина экрана больше заданного числа, то запустить анимацию
+                    let start = Date.now(); // получить стартовое время анимации (в момент клика)
+    
+                    let timer = setInterval(() => { 
+                        let timePassed = Date.now() - start; // запуск таймера, отнять от текущего реального времени стартовое время, после клика
+                        if (timePassed >= 800) {
+                            clearInterval(timer); // если время достигло определенного числа удалить setInterval 
+                            return;
+                        }
+    
+                        draw(timePassed); // отрисовка анимации 
+                    });
+    
+                    let draw = (timePassed) => {
+                        let wContent = +getComputedStyle(popupContent).width.split('px')[0]; // получить стили попап контента (блок с самой формой, а не вся обёртка, с попап )
+                        wContent = -wContent / 2 + 50 + 'px'; // данные для центрирования по горизонтали
+                        popupContent.style.left = timePassed / 16 + '%'; // центрирование по горизонтали
+                        popupContent.style.marginLeft = wContent; // центрирование по горизонтали
+                    };
                 }
-            }
-        });
+    
+            };
+    
+            btnPopup.forEach((elem) => {
+                elem.addEventListener('click', showPopup);
+            });
+    
+            popup.addEventListener('click', (event) => {
+                let target = event.target;
+    
+                if (target.classList.contains('popup-close')) {
+                    popup.style.display = 'none';
+                } else {
+                    target = target.closest('.popup-content');
+                    if (!target) {
+                        popup.style.display = 'none';
+                    }
+                }
+            });
     };
 
     togglePopup();
 
+
+    const scroll = () =>{
+    const anchors = document.querySelectorAll('a[href*="#"]');
+    console.log(anchors);
+
+    for (let anchor of anchors) {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault()
+            
+            const blockID = anchor.getAttribute('href')
+            
+            document.querySelector(blockID).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            })
+        })
+        }
+    }
+    scroll();
 });
