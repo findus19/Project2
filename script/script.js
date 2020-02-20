@@ -46,17 +46,40 @@ window.addEventListener('DOMContentLoaded', () =>{
     //menu
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('nav'),
-            closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul>li');
+            menu = document.querySelector('nav');
 
         const handlerMenu = () =>{
-            menu.classList.toggle('active-menu');
+            if(!menu.style.transform || menu.style.transform === `translate(-100%)`){
+                console.log('123')
+                menu.style.transform = `translate(0)`;
+            } else {
+                console.log('123')
+                menu.style.transform = `translate(-100%)`;
+            }
         }
 
-        btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', handlerMenu);
-        menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
+        btnMenu.addEventListener('click', (event) =>{
+            let target = event.target;
+            if(!target) return;
+            
+            handlerMenu();
+        });
+    
+
+        menu.addEventListener('click', (event) => {
+            let target = event.target;
+
+            if (target.classList.contains('close-btn')){
+                console.log(target)
+                menu.style.transform = `translate(-100%)`;
+            } else {
+                target = target.closest('ul');
+                console.log(target)
+                if (target) {
+                    menu.style.transform = `translate(-100%)`;
+                }
+            }
+        });
     }
 
     toggleMenu();
@@ -65,7 +88,6 @@ window.addEventListener('DOMContentLoaded', () =>{
     const togglePopup = () => {
         const popup = document.querySelector('.popup'),
             btnPopup = document.querySelectorAll('.popup-btn'),
-            closePopup = document.querySelector('.popup-close'),
             popupContent = document.querySelector('.popup-content');
             const showPopup = () => {
                 popup.style.display = 'block'; // показать попап
@@ -113,10 +135,9 @@ window.addEventListener('DOMContentLoaded', () =>{
 
     togglePopup();
 
-
+    //scroll
     const scroll = () =>{
     const anchors = document.querySelectorAll('a[href*="#"]');
-    console.log(anchors);
 
     for (let anchor of anchors) {
         anchor.addEventListener('click', function (e) {
@@ -132,4 +153,51 @@ window.addEventListener('DOMContentLoaded', () =>{
         }
     }
     scroll();
+
+    //табы
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tab = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+        
+        const toggleTabContent = (index) => {
+            for(let i = 0; i < tabContent.length; i++){
+                if(index === i){
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tab[i].classList.remove('active');
+                    tabContent[i].classList.add('d-none');
+                }
+            }
+        };
+        
+        tabHeader.addEventListener('click', (event) => {
+            let target = event.target;
+                target = target.closest('.service-header-tab');
+            
+            if(target){
+                tab.forEach((item, i) => {
+                    if(item === target){
+                        toggleTabContent(i);
+                    }
+                });
+            };
+        });
+
+        /* первый способ    while(target !== tabHeader){
+                if(target.classList.contains('service-header-tab')){
+                    tab.forEach((item, i) => {
+                        if(item === target){
+                            toggleTabContent(i);
+                        }
+                    });
+                    return;
+                };
+                target = target.parentNode; 
+            }
+        }) */
+    }
+
+    tabs();
 });
