@@ -50,15 +50,24 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         const handlerMenu = () =>{
             if(!menu.style.transform || menu.style.transform === `translate(-100%)`){
-                console.log('123')
                 menu.style.transform = `translate(0)`;
             } else {
-                console.log('123')
                 menu.style.transform = `translate(-100%)`;
             }
         }
 
-        btnMenu.addEventListener('click', (event) =>{
+        document.body.addEventListener('click', (event) =>{
+            
+            let target = event.target;
+            console.log(target);
+            let menuBtn = target.matches('.menu');
+            console.log(menuBtn)
+            if(target === menuBtn){
+                handlerMenu();
+            } 
+        })
+
+        /* btnMenu.addEventListener('click', (event) =>{
             let target = event.target;
             if(!target) return;
             
@@ -68,18 +77,21 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         menu.addEventListener('click', (event) => {
             let target = event.target;
-
+            console.log(target);
             if (target.classList.contains('close-btn')){
                 console.log(target)
                 menu.style.transform = `translate(-100%)`;
+            } else if(target.closest('ul')){
+                menu.style.transform = `translate(-100%)`;
             } else {
-                target = target.closest('ul');
-                console.log(target)
-                if (target) {
-                    menu.style.transform = `translate(-100%)`;
+                target = target.closest('nav')
+                console.dir(target);
+                if(!target){
+                    menu.style.transform = `translate(-100%)`
                 }
             }
-        });
+
+        }); */
     }
 
     toggleMenu();
