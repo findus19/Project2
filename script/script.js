@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () =>{
     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('nav');
-
+            let flag = true;
         const handlerMenu = () =>{
             if(!menu.style.transform || menu.style.transform === `translate(-100%)`){
                 menu.style.transform = `translate(0)`;
@@ -59,12 +59,30 @@ window.addEventListener('DOMContentLoaded', () =>{
         document.body.addEventListener('click', (event) =>{
             
             let target = event.target;
-            console.log(target);
-            let menuBtn = target.matches('.menu');
-            console.log(menuBtn)
-            if(target === menuBtn){
-                handlerMenu();
-            } 
+            
+            let menuBtn = target.closest('.menu');
+            let closeMenu = target.classList.contains('close-btn');
+            let ul = target.closest('ul');
+            
+            
+            if(menuBtn && flag === true) {
+                menu.style.transform = `translate(0)`;
+                flag = false;
+            }else if (closeMenu){
+                console.log(target)
+                menu.style.transform = `translate(-100%)`;
+                flag = true; 
+            } else if(ul){
+                menu.style.transform = `translate(-100%)`;
+                flag = true; 
+            } else if(menuBtn && flag === false) {
+                menu.style.transform = `translate(-100%)`;
+                flag = true;                
+            } else if(target !== closeMenu && target !== menu && target !== ul){
+                menu.style.transform = `translate(-100%)`;
+                flag = true; 
+            }
+
         })
 
         /* btnMenu.addEventListener('click', (event) =>{
