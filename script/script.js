@@ -208,7 +208,7 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         const nextSlide = (elem, index, strClass) => {
             elem[index].classList.add(strClass);
-        }
+        };
 
          const autoPlaySlide = () => {
 
@@ -262,22 +262,58 @@ window.addEventListener('DOMContentLoaded', () =>{
             }
             nextSlide(slide, currentSlide, 'portfolio-item-active');
             nextSlide(dot, currentSlide, 'dot-active');
-        })
+        });
 
          slider.addEventListener('mouseover', (event) => {
             if(event.target.matches('.portfolio-btn') || event.target.matches('.dot')){
                 stopSlide();
             }
-        })
+        });
 
         slider.addEventListener('mouseout', (event) => {
             if(event.target.matches('.portfolio-btn') || event.target.matches('.dot')){
                 startSlide();
             }
-        }) 
+        }) ;
 
         startSlide(1500);
-    }
+    };
 
     slider();
+
+    const imgContainer = () => {
+        const img = document.querySelector('#command');
+        let image;
+        img.addEventListener('mouseover', e => {
+            let target = e.target.matches('img');
+            image = e.target.src;
+            if(target) {
+              event.target.src = event.target.dataset.img;
+            }
+        });
+
+        img.addEventListener('mouseout', e => {
+            event.target.src = image;
+        });
+
+    };
+
+    imgContainer();
+
+    const regExp = () => {
+        let inputText = document.querySelectorAll('input[type="number"]');
+
+        inputText.forEach(item => {
+            item.addEventListener('input', () =>{
+                item.setAttribute('type', 'text');
+                let inputValue = item.value;
+                let reg = /\D/;
+                if(reg.test(inputValue)){
+                    inputValue = inputValue.replace(reg, '');
+                    item.value = inputValue;
+                };
+            });
+        });
+    };
+    regExp();
 });
