@@ -318,6 +318,7 @@ window.addEventListener('DOMContentLoaded', () =>{
         });
 
         const countSum = () => {
+            totalValue.textContent = 0;
             let total = 0,
                 countValue = 1,
                 dayValue = 1;
