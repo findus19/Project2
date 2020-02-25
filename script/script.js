@@ -305,9 +305,8 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         inputText.forEach(item => {
             item.addEventListener('input', () =>{
-                item.setAttribute('type', 'text');
                 let inputValue = item.value;
-                let reg = /\D/;
+                let reg = /[.:;,/a-zA-Zа-яА-я]/;
                 if(reg.test(inputValue)){
                     inputValue = inputValue.replace(reg, '');
                     item.value = inputValue;
