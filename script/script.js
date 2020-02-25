@@ -301,12 +301,12 @@ window.addEventListener('DOMContentLoaded', () =>{
     imgContainer();
 
     const regExp = () => {
-        let inputText = document.querySelectorAll('input[type="number"]');
+        let inputText = document.querySelectorAll('input[type="text"]');
 
         inputText.forEach(item => {
             item.addEventListener('input', () =>{
                 let inputValue = item.value;
-                let reg = /[.:;,/a-zA-Zа-яА-я]/;
+                let reg = /\D/;
                 if(reg.test(inputValue)){
                     inputValue = inputValue.replace(reg, '');
                     item.value = inputValue;
