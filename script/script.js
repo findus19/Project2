@@ -338,7 +338,24 @@ window.addEventListener('DOMContentLoaded', () =>{
                 total = price * typeValue * squareValue * countValue * dayValue;
             };
             
-            totalValue.textContent = Math.ceil(total);
+            let tV = Math.ceil(total);
+
+            const totalAnimate = () =>{
+                let speed = 50;
+                console.log(total);
+                let interval =setInterval(()=>{
+                    if(totalValue.textContent*1 +speed >= total){
+                        console.log(total)
+                        
+                        clearInterval(interval);
+                        totalValue.textContent = total;
+                    }else {
+                        totalValue.textContent = totalValue.textContent*1 +speed;
+                        
+                    }
+            }, 50)
+            }
+            totalAnimate();
             
         };
 
