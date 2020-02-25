@@ -326,21 +326,21 @@ window.addEventListener('DOMContentLoaded', () =>{
 
             if(calcCount.value > 1){
                 countValue += (calcCount.value -1)  / 10;
-            }
+            };
 
             if(calcDay.value && calcDay.value < 5){
                 dayValue *= 2;
             } else if (calcDay.value && calcDay.value < 10){
                 dayValue *= 1.5;
-            } 
+            };
 
             if(typeValue && squareValue){
                 total = price * typeValue * squareValue * countValue * dayValue;
-            }
+            };
             
-            totalValue.textContent = total;
+            totalValue.textContent = Math.ceil(total);
             
-        }
+        };
 
         calcBlock.addEventListener('change', (event) => {
             const target = event.target
@@ -349,11 +349,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 countSum();
             } */
             if(target.matches('select') || target.matches('input')){
-                let interval = setInterval(countSum, 10000);
-                if (interval >= totalValue.textContent) {
-                    totalValue.textContent = 1100
-                    return;
-                }
+                countSum();
             }
         })
     };
