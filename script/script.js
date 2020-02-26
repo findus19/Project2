@@ -303,10 +303,10 @@ window.addEventListener('DOMContentLoaded', () =>{
     //калькулятор
     const calc = (price = 100) => {
         const calcBlock = document.querySelector('.calc-block'),
-            calcType = document.querySelector('.calc-type'),
-            calcSquare = document.querySelector('.calc-square'),
-            calcDay = document.querySelector('.calc-day'),
-            calcCount = document.querySelector('.calc-count'),
+            calcType = document.querySelector('.calc-type'), //тип помещения
+            calcSquare = document.querySelector('.calc-square'), // площадь
+            calcDay = document.querySelector('.calc-day'), // количество дней
+            calcCount = document.querySelector('.calc-count'), // кол-во помещений
             totalValue = document.getElementById('total');
             
         const calcul = document.querySelector('#calc');
@@ -337,21 +337,23 @@ window.addEventListener('DOMContentLoaded', () =>{
 
             if(typeValue && squareValue){
                 total = price * typeValue * squareValue * countValue * dayValue;
+                console.log(price);
+                console.log(typeValue);
+                console.log(squareValue);
+                console.log(countValue);
+                console.log(dayValue);
             };
             
-            let tV = Math.ceil(total);
 
             const totalAnimate = () =>{
                 let speed = 50;
                 console.log(total);
-                let interval =setInterval(()=>{
-                    if(totalValue.textContent*1 +speed >= total){
-                        console.log(total)
-                        
+                let interval = setInterval(() => {
+                    if(totalValue.textContent * 1 +speed >= total){
                         clearInterval(interval);
-                        totalValue.textContent = total;
+                        totalValue.textContent = Math.ceil(total);
                     }else {
-                        totalValue.textContent = totalValue.textContent*1 +speed;
+                        totalValue.textContent = totalValue.textContent * 1 +speed;
                         
                     }
             }, 50)
