@@ -394,7 +394,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 event.preventDefault();
                 e.appendChild(statusMessage);
                 statusMessage.textContent = loadMessage;
-                statusMessage.style.color = 'white';
+                statusMessage.style.color = 'fffee7';
                 const formData = new FormData(e);
                 let body = {};
                 for(const value of formData.entries()){
@@ -402,11 +402,11 @@ window.addEventListener('DOMContentLoaded', () =>{
                 }
                 postData(body, () => {
                     statusMessage.textContent = successMessage;
-                    statusMessage.style.color = 'green';
+                    statusMessage.style.color = '#00fbbe';
                 }, () => {
                     console.error(error)
                     statusMessage.textContent = errorMessage;
-                    statusMessage.style.color = 'red';
+                    statusMessage.style.color = 'f6023c';
                 });
             });
         }) ;
@@ -434,6 +434,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 input.forEach(item => {
                 item.value = ''
             });
+            statusMessage.style.color = '';
         };
     };
 
