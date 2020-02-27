@@ -397,6 +397,25 @@ main a {
     display: block
 }
 
+.loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #19b5fe;
+    width: 50px;
+    height: 50px;
+    /* position: absolute; */
+   /*  left: 50%; */
+/*     margin: -75px 0 0 -75px; */
+    /* z-index: 1; */
+    display: inline-block;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
 @media (max-width:1024px) {
     .portfolio-content {
         height: 650px
@@ -846,16 +865,6 @@ footer .web {
 
 .thanks-block a {
     color: #fff
-}
-
-.loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 100px;
-    height: 100px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
 }
 
 @media (max-width:991px) {

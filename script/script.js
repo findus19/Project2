@@ -388,6 +388,8 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem;';
+        statusMessage.classList.remove('loader');
+        statusMessage.textContent = ' ';
         //statusMessage.style.color = 'blue';
 
         form.forEach((e) => {
@@ -395,8 +397,10 @@ window.addEventListener('DOMContentLoaded', () =>{
                 event.preventDefault();
                 e.appendChild(statusMessage);
                 
-                statusMessage.textContent = loadMessage;
-                statusMessage.style.cssText = 'color: #fffee7;';
+                //statusMessage.textContent = loadMessage;
+                
+                statusMessage.classList.add('loader');
+                //statusMessage.style.cssText = 'color: #fffee7;';
                 
                 const formData = new FormData(e);
                 let body = {};
@@ -404,10 +408,12 @@ window.addEventListener('DOMContentLoaded', () =>{
                     body[value[0]] = value[1];
                 }
                 postData(body, () => {
+                    statusMessage.classList.remove('loader');
                     statusMessage.textContent = successMessage;
                     statusMessage.style.color = '#00fbbe';
                 }, () => {
                     console.error(error)
+                    statusMessage.classList.remove('loader');
                     statusMessage.textContent = errorMessage;
                     statusMessage.style.color = '#f6023c';
                 });
@@ -433,7 +439,6 @@ window.addEventListener('DOMContentLoaded', () =>{
             request.setRequestHeader('Content-Type', 'application/json');
             
             request.send(JSON.stringify(body));
-            console.log(input);
                 input.forEach(item => {
                 item.value = ''
             });
