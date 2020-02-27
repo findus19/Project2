@@ -380,7 +380,6 @@ window.addEventListener('DOMContentLoaded', () =>{
 
     const sendForm = () => {
         const errorMessage = 'Что-то пошло не так',
-            loadMessage = 'Загрузка...',
             successMessage = 'Заявка отправлена';
 
         const form = document.querySelectorAll('form');
@@ -389,19 +388,13 @@ window.addEventListener('DOMContentLoaded', () =>{
         const statusMessage = document.createElement('div');
         console.dir(statusMessage)
         statusMessage.style.cssText = 'font-size: 2rem;';
-        //statusMessage.classList.remove('loader');
-        
-        //statusMessage.style.color = 'blue';
 
         form.forEach((e) => {
             e.addEventListener('submit', (event) => {
                 event.preventDefault();
                 e.appendChild(statusMessage);
                 
-                //statusMessage.textContent = loadMessage;
-                
                 statusMessage.classList.add('loader');
-                //statusMessage.style.cssText = 'color: #fffee7;';
                 
                 const formData = new FormData(e);
                 let body = {};
@@ -432,7 +425,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                     setTimeout(() => statusMessage.textContent = ' ', 5000);
                 } else {
                     errorData(request.status);
-                    setTimeout(() => statusMessage.remove(), 5000);
+                    setTimeout(() => statusMessage.textContent = ' ', 5000);
                 }
             });
             
