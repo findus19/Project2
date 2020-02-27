@@ -394,6 +394,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 event.preventDefault();
                 e.appendChild(statusMessage);
                 statusMessage.textContent = loadMessage;
+                statusMessage.style.color = 'white';
                 const formData = new FormData(e);
                 let body = {};
                 for(const value of formData.entries()){
@@ -401,9 +402,11 @@ window.addEventListener('DOMContentLoaded', () =>{
                 }
                 postData(body, () => {
                     statusMessage.textContent = successMessage;
+                    statusMessage.style.color = 'green';
                 }, () => {
                     console.error(error)
                     statusMessage.textContent = errorMessage;
+                    statusMessage.style.color = 'red';
                 });
             });
         }) ;
