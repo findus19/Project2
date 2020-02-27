@@ -409,7 +409,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 }, () => {
                     console.error(error)
                     statusMessage.textContent = errorMessage;
-                    statusMessage.style.color = 'f6023c';
+                    statusMessage.style.color = '#f6023c';
                 });
             });
         }) ;
