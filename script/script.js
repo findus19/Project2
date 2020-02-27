@@ -411,14 +411,12 @@ window.addEventListener('DOMContentLoaded', () =>{
                 postData(body, () => {
                     statusMessage.classList.remove('loader');
                     statusMessage.textContent = successMessage;
-                    statusMessage.style.color = '#19b5fe';
+                    statusMessage.style.color = '#19b5fe';                  
                 }, () => {
                     console.error(error)
-                    statusMessage.classList.remove('loader');
                     statusMessage.textContent = errorMessage;
                     statusMessage.style.color = '#f6023c';
                 });
-                setTimeout(() => statusMessage.remove(), 5000);
             });
         }) ;
 
@@ -429,11 +427,12 @@ window.addEventListener('DOMContentLoaded', () =>{
                 if(request.readyState !==4){
                     return
                 }
-
                 if(request.status === 200){
                     outputData();
+                    setTimeout(() => statusMessage.textContent = ' ', 5000);
                 } else {
                     errorData(request.status);
+                    setTimeout(() => statusMessage.remove(), 5000);
                 }
             });
             
