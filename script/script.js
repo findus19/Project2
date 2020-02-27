@@ -388,13 +388,16 @@ window.addEventListener('DOMContentLoaded', () =>{
 
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem;';
+        //statusMessage.style.color = 'blue';
 
         form.forEach((e) => {
             e.addEventListener('submit', (event) => {
                 event.preventDefault();
                 e.appendChild(statusMessage);
+                
                 statusMessage.textContent = loadMessage;
-                statusMessage.style.color = 'fffee7';
+                statusMessage.style.cssText = 'color: #fffee7;';
+                
                 const formData = new FormData(e);
                 let body = {};
                 for(const value of formData.entries()){
@@ -434,8 +437,9 @@ window.addEventListener('DOMContentLoaded', () =>{
                 input.forEach(item => {
                 item.value = ''
             });
-            statusMessage.style.color = '';
+            
         };
+        statusMessage.style.color = '';
     };
 
     sendForm()
