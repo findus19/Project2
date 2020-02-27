@@ -1,6 +1,5 @@
 class Validator{
     constructor({selector, pattern = {}, method}){
-        console.log(selector)
         this.form = document.querySelector(selector);
         this.pattern = pattern;
         this.method = method;
@@ -101,9 +100,8 @@ class Validator{
     }
 
     setPattern(){
-        console.log(this.pattern)
-        if(!this.pattern.user_name){
-            this.pattern.user_name = /[а-яА-я,.!?"';:]/;
+        if(!this.pattern.phone){
+            this.pattern.phone = /[а-яА-я]]/;
         }
         if(!this.pattern.user_message){
             this.pattern.user_message = /^\w+@\w+\.\w{2,}/;

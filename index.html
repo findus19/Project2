@@ -415,19 +415,25 @@
     const valid1 = new Validator({
         selector: '#form1',
         pattern: {
-			rus: /[а-яА-я]/
+			rus: /^[А-ЯЁа-яё ]+$/i,
+			telephon: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
 		},
         method: {
             'form1-name': [
                 ['notEmpty'],
                 ['pattern', 'rus'],
+			],
+			'form1-phone': [
+                ['notEmpty'],
+                ['pattern', 'telephon'],
             ]
 		}
 	});
 	const valid2 = new Validator({
 		selector: '#form2',
         pattern: {
-			rus: /[а-яА-я]/
+			rus: /^[А-ЯЁа-яё ]+$/i,
+			telephon: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
 		},
         method: {
             'form2-name': [
@@ -437,18 +443,27 @@
             'form2-message': [
                 ['notEmpty'],
                 ['pattern', 'rus'],
+			],
+			'form2-phone': [
+                ['notEmpty'],
+                ['pattern', 'telephon'],
             ]
 		},
 	});
 	const valid3 = new Validator({	
 		selector: '#form3',
         pattern: {
-			rus: /[а-яА-я]/
+			rus: /^[А-ЯЁа-яё ]+$/i,
+			telephon: /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/
 		},
         method: {
             'form3-name': [
                 ['notEmpty'],
                 ['pattern', 'rus'],
+			],
+			'form3-phone': [
+                ['notEmpty'],
+                ['pattern', 'telephon'],
             ]
         }
     })
