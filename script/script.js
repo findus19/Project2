@@ -387,9 +387,10 @@ window.addEventListener('DOMContentLoaded', () =>{
         const input = document.querySelectorAll('input');
 
         const statusMessage = document.createElement('div');
+        console.dir(statusMessage)
         statusMessage.style.cssText = 'font-size: 2rem;';
-        statusMessage.classList.remove('loader');
-        statusMessage.textContent = ' ';
+        //statusMessage.classList.remove('loader');
+        
         //statusMessage.style.color = 'blue';
 
         form.forEach((e) => {
@@ -410,13 +411,14 @@ window.addEventListener('DOMContentLoaded', () =>{
                 postData(body, () => {
                     statusMessage.classList.remove('loader');
                     statusMessage.textContent = successMessage;
-                    statusMessage.style.color = '#00fbbe';
+                    statusMessage.style.color = '#19b5fe';
                 }, () => {
                     console.error(error)
                     statusMessage.classList.remove('loader');
                     statusMessage.textContent = errorMessage;
                     statusMessage.style.color = '#f6023c';
                 });
+                setTimeout(() => statusMessage.remove(), 5000);
             });
         }) ;
 
@@ -439,7 +441,7 @@ window.addEventListener('DOMContentLoaded', () =>{
             request.setRequestHeader('Content-Type', 'application/json');
             
             request.send(JSON.stringify(body));
-                input.forEach(item => {
+            input.forEach(item => {
                 item.value = ''
             });
             
