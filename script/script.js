@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () =>{
         updateClock();
     }
 
-    countTimer('1 march 2020');
+    countTimer('12 march 2020');
 
     //menu
     const toggleMenu = () => {
@@ -281,6 +281,7 @@ window.addEventListener('DOMContentLoaded', () =>{
 
     slider();
 
+    //команда
     const imgContainer = () => {
         const img = document.querySelector('#command');
         let image;
@@ -390,56 +391,62 @@ window.addEventListener('DOMContentLoaded', () =>{
         statusMessage.style.cssText = 'font-size: 2rem;';
 
         form.forEach((e) => {
-            e.addEventListener('submit', (event) => {
-                event.preventDefault();
-                e.appendChild(statusMessage);
-                
-                statusMessage.classList.add('loader');
-                
-                const formData = new FormData(e);
-                let body = {};
-                for(const value of formData.entries()){
-                    body[value[0]] = value[1];
-                }
-                postData(body, () => {
-                    statusMessage.classList.remove('loader');
-                    statusMessage.textContent = successMessage;
-                    statusMessage.style.color = '#19b5fe';                  
-                }, () => {
-                    console.error(error)
-                    statusMessage.textContent = errorMessage;
-                    statusMessage.style.color = '#f6023c';
+            return new Promise((resolve, reject) => {
+                e.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    e.appendChild(statusMessage);
+                    
+                    resolve(statusMessage.classList.add('loader'));
+                    
+                    const formData = new FormData(e);
+                    let body = {};
+                    for(const value of formData.entries()){
+                        body[value[0]] = value[1];
+                    }
+                    postData(body, () => {
+                        statusMessage.classList.remove('loader');
+                        statusMessage.textContent = successMessage;
+                        statusMessage.style.color = '#19b5fe';  
+                        resolve(statusMessage.textContent);                
+                    }, () => {
+                        console.error(error)
+                        statusMessage.textContent = errorMessage;
+                        statusMessage.style.color = '#f6023c';
+                        reject(statusMessage.textContent); 
+                    });
                 });
-            });
-        }) ;
+            })  
+        });
 
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
-
-            request.addEventListener('readystatechange', () => {
-                if(request.readyState !==4){
-                    return
-                }
-                if(request.status === 200){
-                    outputData();
-                    setTimeout(() => statusMessage.textContent = ' ', 5000);
-                } else {
-                    errorData(request.status);
-                    setTimeout(() => statusMessage.textContent = ' ', 5000);
-                }
+        const postData = (body/* , outputData, errorData */) => {
+            return new Promise((resolve, reject) => {
+                const request = new XMLHttpRequest();
+                request.addEventListener('readystatechange', () => {
+                    if(request.readyState !==4){
+                        return
+                    }
+                    if(request.status === 200){
+                        resolve();
+                        setTimeout(() => statusMessage.textContent = ' ', 5000);
+                    } else {
+                        reject(request.status);
+                        setTimeout(() => statusMessage.textContent = ' ', 5000);
+                    }
+                });
+                
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                
+                request.send(JSON.stringify(body));
+                input.forEach(item => {
+                    item.value = ''
+                });
+            statusMessage.style.color = '';
             });
-            
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            
-            request.send(JSON.stringify(body));
-            input.forEach(item => {
-                item.value = ''
-            });
-            
         };
-        statusMessage.style.color = '';
     };
 
     sendForm()
+    .then(postData)
+    .catch(error => console.log(error));
 });
