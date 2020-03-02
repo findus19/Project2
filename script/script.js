@@ -396,13 +396,11 @@ window.addEventListener('DOMContentLoaded', () =>{
                 e.appendChild(statusMessage);
                 statusMessage.classList.add('loader');
                 const formData = new FormData(e);
-                let body = {};
 
+                let body = {};
                 formData.forEach((val, key) => {
                     body[key] = val;
                 });
-             
-         
 
                 const postData = (body) => {
                     return new Promise(function (resolve, reject) {
@@ -413,33 +411,21 @@ window.addEventListener('DOMContentLoaded', () =>{
                         }
 
                         if(request.status === 200) {
-                           resolve();
-                           input.forEach(item => {
-                            item.value = ''
+                            resolve();
+                            setTimeout(() => statusMessage.textContent = ' ', 5000);
+                            input.forEach(item => {
+                                item.value = ''
                             });
                         } else {
-                         reject();
+                            reject();
+                            setTimeout(() => statusMessage.textContent = ' ', 5000);
                         }
-                        });
-                        /* request.addEventListener('readystatechange', () => {
-                            if(request.readyState !==4){
-                                return
-                            }
-                            if(request.status === 200){
-                                resolve();
-                                setTimeout(() => statusMessage.textContent = ' ', 5000);
-                            } else {
-                                reject(request.status);
-                                setTimeout(() => statusMessage.textContent = ' ', 5000);
-                            }
-                        }); */
+                    });
+
                     request.open('POST', './server.php');
                     request.setRequestHeader('Content-Type', 'application/json');                       
-
                     request.send(JSON.stringify(body));
-
                     });
-                 
                 };
 
                 postData(body)
@@ -458,57 +444,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 });
             });
         });
-            /* e.addEventListener('submit', (event) => {
-                event.preventDefault();
-                e.appendChild(statusMessage);
-                
-                resolve(statusMessage.classList.add('loader'));
-                
-                const formData = new FormData(e);
-                let body = {};
-                for(const value of formData.entries()){
-                    body[value[0]] = value[1];
-                }
-                postData(body, () => {
-                    statusMessage.classList.remove('loader');
-                    statusMessage.textContent = successMessage;
-                    statusMessage.style.color = '#19b5fe';  
-                    //resolve(statusMessage.textContent);                
-                }, () => {
-                    console.error(error)
-                    statusMessage.textContent = errorMessage;
-                    statusMessage.style.color = '#f6023c';
-                    //reject(statusMessage.textContent); 
-                });
-            });
-        });  
-
-        const postData = (body, outputData, errorData ) => {
-            return new Promise((resolve, reject) => {
-                const request = new XMLHttpRequest();
-                request.addEventListener('readystatechange', () => {
-                    if(request.readyState !==4){
-                        return
-                    }
-                    if(request.status === 200){
-                        resolve();
-                        setTimeout(() => statusMessage.textContent = ' ', 5000);
-                    } else {
-                        reject(request.status);
-                        setTimeout(() => statusMessage.textContent = ' ', 5000);
-                    }
-                });
-                
-                request.open('POST', './server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-                
-                request.send(JSON.stringify(body));
-                input.forEach(item => {
-                    item.value = ''
-                });
-            statusMessage.style.color = '';
-            });
-        }; */
+        statusMessage.style.color = '';
     };
 
     sendForm();
