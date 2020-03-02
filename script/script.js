@@ -397,6 +397,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                 statusMessage.classList.add('loader');
                 const formData = new FormData(e);
 
+                console.log(e);
                 let body = {};
                 formData.forEach((val, key) => {
                     body[key] = val;
@@ -448,4 +449,72 @@ window.addEventListener('DOMContentLoaded', () =>{
     };
 
     sendForm();
+
+    //регулярки
+    const reg = () => {
+        const inputName = document.querySelectorAll('.form-name'),
+            inputPhone = document.querySelectorAll('.form-phone'),
+            inputEmail = document.querySelectorAll('.form-email'),
+            inputMess = document.querySelectorAll('.mess'),
+            inputNameTop = document.querySelectorAll('.top-form');
+
+        inputName.forEach(item =>{
+            item.addEventListener('input', () => {
+                let inputValue = item.value;
+                let reg = /[.:;/a-zA-Z0-9 ]/;
+                if (reg.test(inputValue)){
+                    inputValue = inputValue.replace(reg, '');
+                    item.value = inputValue;
+                } /* /^[a-zA-Z0-9]+$/i */
+            });
+        });
+
+        inputPhone.forEach(item =>{
+            item.addEventListener('input', () => {
+                let inputValue = item.value;
+                let reg = /[.:;,/a-zA-Zа-яА-я]/;
+                if (reg.test(inputValue)){
+                    inputValue = inputValue.replace(reg, '');
+                    item.value = inputValue;
+                } /* /^[a-zA-Z0-9]+$/i */
+            });
+        });
+
+        inputEmail.forEach(item =>{
+            item.addEventListener('input', () => {
+                let inputValue = item.value;
+                let reg = /[а-яА-Я ]/;
+                if (reg.test(inputValue)){
+                    inputValue = inputValue.replace(reg, '');
+                    item.value = inputValue;
+                } /* /^[a-zA-Z0-9]+$/i */
+            });
+        });
+
+        inputMess.forEach(item =>{
+            item.addEventListener('input', () => {
+                let inputValue = item.value;
+                let reg = /[.:;/a-zA-Z0-9 ]/;
+                if (reg.test(inputValue)){
+                    inputValue = inputValue.replace(reg, '');
+                    item.value = inputValue;
+                } /* /^[a-zA-Z0-9]+$/i */
+            });
+        });
+
+        inputNameTop.forEach(item =>{
+            item.addEventListener('input', () => {
+                let inputValue = item.value;
+                let reg = /[.:;/a-zA-Z0-9 ]/;
+                if (reg.test(inputValue)){
+                    inputValue = inputValue.replace(reg, '');
+                    item.value = inputValue;
+                } /* /^[a-zA-Z0-9]+$/i */
+            });
+        });
+    }
+
+    reg();
+
+
 });
