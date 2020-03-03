@@ -394,9 +394,8 @@ window.addEventListener('DOMContentLoaded', () =>{
                 event.preventDefault();
                 e.appendChild(statusMessage);
                 statusMessage.classList.add('loader');
+                
                 const formData = new FormData(e);
-
-                console.log(formData);
                 let body = {};
                 formData.forEach((val, key) => {
                     body[key] = val;
@@ -409,7 +408,7 @@ window.addEventListener('DOMContentLoaded', () =>{
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(body)
-                    })
+                    });
                    /*  return new Promise(function (resolve, reject) {
                         const request = new XMLHttpRequest();
                         request.addEventListener('readystatechange', () => {
@@ -436,14 +435,15 @@ window.addEventListener('DOMContentLoaded', () =>{
                 }; 
 
                 postData(body)
-                .then(() => {
+                .then((response) => {
                     statusMessage.classList.add('loader');
+                    return response
                 })
                 .then((response) => {
                     console.log(response)
                     if(response.status !== 200){
                         throw new Error('status net work not 200')
-                    }
+                    } 
                     statusMessage.classList.remove('loader');
                     statusMessage.textContent = successMessage;
                     statusMessage.style.color = '#19b5fe'; 
@@ -452,8 +452,9 @@ window.addEventListener('DOMContentLoaded', () =>{
                         item.value = ''
                     });
                 })
-                .catch(() => {
+                .catch((error) => {
                     statusMessage.classList.remove('loader');
+                    console.log(error)
                     statusMessage.textContent = errorMessage;
                     statusMessage.style.color = '#f6023c';   
                     setTimeout(() => statusMessage.textContent = ' ', 5000);
