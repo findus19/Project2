@@ -387,7 +387,6 @@ window.addEventListener('DOMContentLoaded', () =>{
         const input = document.querySelectorAll('input');
 
         const statusMessage = document.createElement('div');
-        console.dir(statusMessage)
         statusMessage.style.cssText = 'font-size: 2rem;';
 
         form.forEach((e) => {
@@ -397,14 +396,21 @@ window.addEventListener('DOMContentLoaded', () =>{
                 statusMessage.classList.add('loader');
                 const formData = new FormData(e);
 
-                console.log(e);
+                console.log(formData);
                 let body = {};
                 formData.forEach((val, key) => {
                     body[key] = val;
                 });
 
                 const postData = (body) => {
-                    return new Promise(function (resolve, reject) {
+                    return fetch('./server.php', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    })
+                   /*  return new Promise(function (resolve, reject) {
                         const request = new XMLHttpRequest();
                         request.addEventListener('readystatechange', () => {
                         if(request.readyState !== 4){
@@ -426,22 +432,31 @@ window.addEventListener('DOMContentLoaded', () =>{
                     request.open('POST', './server.php');
                     request.setRequestHeader('Content-Type', 'application/json');                       
                     request.send(JSON.stringify(body));
-                    });
-                };
+                    });*/
+                }; 
 
                 postData(body)
                 .then(() => {
                     statusMessage.classList.add('loader');
                 })
-                .then(() => {
+                .then((response) => {
+                    console.log(response)
+                    if(response.status !== 200){
+                        throw new Error('status net work not 200')
+                    }
                     statusMessage.classList.remove('loader');
                     statusMessage.textContent = successMessage;
                     statusMessage.style.color = '#19b5fe'; 
+                    setTimeout(() => statusMessage.textContent = ' ', 5000);
+                    input.forEach(item => {
+                        item.value = ''
+                    });
                 })
                 .catch(() => {
                     statusMessage.classList.remove('loader');
                     statusMessage.textContent = errorMessage;
                     statusMessage.style.color = '#f6023c';   
+                    setTimeout(() => statusMessage.textContent = ' ', 5000);
                 });
             });
         });
