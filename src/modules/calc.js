@@ -2,8 +2,8 @@ const calc = (price = 100) => {
     const calcBlock = document.querySelector('.calc-block'),
         calcType = document.querySelector('.calc-type'), //тип помещения
         calcSquare = document.querySelector('.calc-square'), // площадь
-        calcDay = document.querySelector('.calc-day'), // количество дней
         calcCount = document.querySelector('.calc-count'), // кол-во помещений
+        calcDay = document.querySelector('.calc-day'), // количество дней
         totalValue = document.getElementById('total');
         
     const calcul = document.querySelector('#calc');
@@ -23,13 +23,20 @@ const calc = (price = 100) => {
         let squareValue = +calcSquare.value;
 
         if(calcCount.value > 1){
-            countValue += (calcCount.value -1)  / 10;
+            //total = 0;
+            countValue = countValue + (calcCount.value -1)  / 10;
         };
 
         if(calcDay.value && calcDay.value < 5){
-            dayValue *= 2;
+            totalValue.textContent = 0;
+            console.log(calcDay.value);
+            dayValue = calcDay.value * 2;
+            console.log(dayValue);
         } else if (calcDay.value && calcDay.value < 10){
-            dayValue *= 1.5;
+            totalValue.textContent = 0;
+            console.log(calcDay.value);
+            dayValue = calcDay.value * 1.5;
+            console.log(dayValue);
         };
 
         if(typeValue && squareValue){
@@ -38,16 +45,16 @@ const calc = (price = 100) => {
         
 
         const totalAnimate = () =>{
-            let speed = 50;
+            let speed = 100;
             let interval = setInterval(() => {
                 if(totalValue.textContent * 1 +speed >= total){
                     clearInterval(interval);
                     totalValue.textContent = Math.ceil(total);
                 }else {
                     totalValue.textContent = totalValue.textContent * 1 +speed;
-                    
                 }
-        }, 50)
+            }, 50)
+            total = 0;
         }
         totalAnimate();
         
