@@ -52,16 +52,19 @@ const calc = (price = 100) => {
                     });
                     calcItem.disabled = false;
                 }else {
-                    totalValue.textContent = totalValue.textContent * 1 +speed;
-                    if(sum > 20000){
-                        speed = 1000;
-                    }else if (sum > 50000){
-                        speed = 5000;
-                    }else if (sum > 150000){
-                        speed = 10000;
+                    if(sum > 500000){
+                        speed = 100000;
                     }else if (sum > 300000){
                         speed = 20000;
+                    }else if (sum >150000){
+                        speed = 10000;
+                    }else if (sum > 50000){
+                        speed = 5000;
+                    }else if (sum > 20000){
+                        speed = 1000;
                     }
+                    totalValue.textContent = totalValue.textContent * 1 +speed;
+                    
                     inpuNumber.forEach(item => {
                         item.disabled = true;
                     });
