@@ -54,7 +54,6 @@ const calc = (price = 100) => {
                     totalValue.textContent = totalValue.textContent * 1 +speed;
                 }
             }, 50)
-            total = 0;
         }
         totalAnimate();
         
