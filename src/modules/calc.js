@@ -23,20 +23,16 @@ const calc = (price = 100) => {
         let squareValue = +calcSquare.value;
 
         if(calcCount.value > 1){
-            //total = 0;
             countValue = countValue + (calcCount.value -1)  / 10;
+            console.log(countValue  + ': помещения')
         };
 
         if(calcDay.value && calcDay.value < 5){
             totalValue.textContent = 0;
-            console.log(calcDay.value);
             dayValue = calcDay.value * 2;
-            console.log(dayValue);
         } else if (calcDay.value && calcDay.value < 10){
             totalValue.textContent = 0;
-            console.log(calcDay.value);
             dayValue = calcDay.value * 1.5;
-            console.log(dayValue);
         };
 
         if(typeValue && squareValue){
@@ -44,18 +40,36 @@ const calc = (price = 100) => {
         };
         
 
-        const totalAnimate = () =>{
-            let speed = 100;
+        const totalAnimate = (sum) =>{
+            let inpuNumber = document.querySelectorAll('input[type="number"]'),
+                calcItem = document.querySelector('.calc-type');
+            let speed = 500;
             let interval = setInterval(() => {
-                if(totalValue.textContent * 1 +speed >= total){
+                if(totalValue.textContent * 1 +speed >= sum){
                     clearInterval(interval);
-                    totalValue.textContent = Math.ceil(total);
+                    totalValue.textContent = Math.ceil(sum);
+                    inpuNumber.forEach(item => {
+                        item.disabled = false;
+                    });
+                    calcItem.disabled = false;
                 }else {
                     totalValue.textContent = totalValue.textContent * 1 +speed;
+                    if(sum > 20000){
+                        speed = 1000;
+                    }else if (sum > 50000){
+                        speed = 5000;
+                    }else if (sum > 150000){
+                        speed = 10000;
+                    }
+                    inpuNumber.forEach(item => {
+                        item.disabled = true;
+                    });
+                    calcItem.disabled = true;
                 }
             }, 50)
+            
         }
-        totalAnimate();
+        totalAnimate(total);
         
     };
 
