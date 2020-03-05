@@ -24,7 +24,6 @@ const calc = (price = 100) => {
 
         if(calcCount.value > 1){
             countValue = countValue + (calcCount.value -1)  / 10;
-            console.log(countValue  + ': помещения')
         };
 
         if(calcDay.value && calcDay.value < 5){
@@ -60,6 +59,8 @@ const calc = (price = 100) => {
                         speed = 5000;
                     }else if (sum > 150000){
                         speed = 10000;
+                    }else if (sum > 300000){
+                        speed = 20000;
                     }
                     inpuNumber.forEach(item => {
                         item.disabled = true;
